@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Table(name = "post")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostEntity extends BaseEntity{
 
@@ -24,13 +25,13 @@ public class PostEntity extends BaseEntity{
     private String body;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "member_id")
     private MemberEntity member;
 
+    //TODO :: 생성자에 Member 추가
     @Builder
-    private PostEntity(String title, String body, MemberEntity member) {
+    private PostEntity(String title, String body) {
         this.title = title;
         this.body = body;
-        this.member = member;
     }
 }
