@@ -6,7 +6,6 @@ spring:
         - common
       prod:
         - common
-
 ---
 spring:
   config:
@@ -48,3 +47,4 @@ spring:
       ddl-auto: create
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
+

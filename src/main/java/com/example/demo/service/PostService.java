@@ -1,18 +1,18 @@
 package com.example.demo.service;
 
-import com.example.demo.controller.dto.MemberDto;
 import com.example.demo.controller.dto.request.PostCreateRequest;
 import com.example.demo.controller.dto.response.PostCreateResponse;
-import com.example.demo.entity.MemberEntity;
 import com.example.demo.entity.PostEntity;
-import com.example.demo.repository.PostRepository;
+import com.example.demo.post.PostRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class PostService {
 
     private final PostRepository postRepository;
@@ -21,12 +21,7 @@ public class PostService {
     public PostCreateResponse create(PostCreateRequest request){
         //MemberEntity member = MemberEntity.fromDto(memberDto);
 
-        PostEntity newPost = PostEntity.builder()
-                        .title(request.getTitle())
-                        .body(request.getBody())
-                        .build();
-
-        PostEntity savedPost = postRepository.save(newPost);
+        PostEntity savedPost = postRepository.save(PostEntity.of(request));
 
         return PostCreateResponse.builder()
                 .id(savedPost.getId())

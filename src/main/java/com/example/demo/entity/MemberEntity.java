@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.controller.dto.MemberDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -35,6 +36,13 @@ public class MemberEntity extends BaseEntity {
     private MemberEntity(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+
+    public static MemberEntity fromDto(MemberDto memberDto){
+        return MemberEntity.builder()
+                .email(memberDto.getEmail())
+                .password(memberDto.getPassword())
+                .build();
     }
 
 }
