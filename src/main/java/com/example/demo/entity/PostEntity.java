@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.controller.dto.request.PostCreateRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
@@ -33,5 +34,16 @@ public class PostEntity extends BaseEntity{
     private PostEntity(String title, String body) {
         this.title = title;
         this.body = body;
+    }
+
+    public static PostEntity of(PostCreateRequest request){
+        return PostEntity.builder()
+                .title(request.getTitle())
+                .body(request.getBody())
+                .build();
+    }
+
+    public void setIdForTest(Long id){
+        this.id = id;
     }
 }
