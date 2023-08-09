@@ -22,6 +22,7 @@ public class MemberEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String email;
 
     private String password;
@@ -39,6 +40,13 @@ public class MemberEntity extends BaseEntity {
         return MemberEntity.builder()
                 .email(request.getEmail())
                 .password(request.getPassword())
+                .build();
+    }
+
+    public static MemberEntity fromDetails(CustomMemberDetails memberDetails){
+        return MemberEntity.builder()
+                .email(memberDetails.getEmail())
+                .password(memberDetails.getPassword())
                 .build();
     }
 

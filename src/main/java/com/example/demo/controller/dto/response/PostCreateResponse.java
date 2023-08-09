@@ -11,12 +11,14 @@ public class PostCreateResponse {
     private Long id;
     private String title;
     private String body;
+    private String email;
 
     @Builder
-    private PostCreateResponse(Long id, String title, String body) {
+    private PostCreateResponse(Long id, String title, String body, String email) {
         this.id = id;
         this.title = title;
         this.body = body;
+        this.email = email;
     }
 
 }

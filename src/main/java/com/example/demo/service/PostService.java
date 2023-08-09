@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.controller.dto.request.PostCreateRequest;
 import com.example.demo.controller.dto.response.PostCreateResponse;
 import com.example.demo.controller.dto.response.PostReadResponse;
+import com.example.demo.entity.CustomMemberDetails;
 import com.example.demo.entity.PostEntity;
 import com.example.demo.exception.ApplicationException;
 import com.example.demo.repository.PostRepository;
@@ -21,15 +22,14 @@ public class PostService {
     private final PostRepository postRepository;
 
     @Transactional
-    public PostCreateResponse create(PostCreateRequest request){
-        //MemberEntity member = MemberEntity.fromDto(memberDto);
-
-        PostEntity savedPost = postRepository.save(PostEntity.of(request));
+    public PostCreateResponse create(PostCreateRequest request, CustomMemberDetails memberDetails){
+        PostEntity savedPost = postRepository.save(PostEntity.of(request, memberDetails));
 
         return PostCreateResponse.builder()
                 .id(savedPost.getId())
                 .title(savedPost.getTitle())
                 .body(savedPost.getBody())
+                .email(savedPost.getMember().getEmail())
                 .build();
     }
 

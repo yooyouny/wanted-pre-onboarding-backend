@@ -4,9 +4,11 @@ import com.example.demo.controller.dto.ApiResponse;
 import com.example.demo.controller.dto.request.PostCreateRequest;
 import com.example.demo.controller.dto.response.PostCreateResponse;
 import com.example.demo.controller.dto.response.PostReadResponse;
+import com.example.demo.entity.CustomMemberDetails;
 import com.example.demo.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,9 +19,9 @@ public class PostRestController {
     private final PostService postService;
 
     @PostMapping
-    public ApiResponse<PostCreateResponse> create(@Valid @RequestBody PostCreateRequest request){
-        // TODO :: 파라미터에 memberDto 추가
-       return ApiResponse.ok(postService.create(request));
+    public ApiResponse<PostCreateResponse> create(@Valid @RequestBody PostCreateRequest request,
+                                                  @AuthenticationPrincipal CustomMemberDetails member){
+       return ApiResponse.ok(postService.create(request, member));
     }
 
     @GetMapping("/{postId}")

@@ -1,9 +1,8 @@
 package com.example.demo.configuration.filter;
 
-import com.example.demo.controller.dto.response.MemberRegisterResponse;
+import com.example.demo.entity.CustomMemberDetails;
 import com.example.demo.service.MemberService;
 import com.example.demo.utill.JwtTokenUtils;
-import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -51,10 +50,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             }
 
             String email = JwtTokenUtils.getEmailFromToken(token, secretKey);
-            MemberRegisterResponse memberDto = memberService.loadMemberByEmail(email);
+            CustomMemberDetails member = memberService.loadMemberByEmail(email);
 
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                    memberDto, null, null
+                    member, null, null
             );
 
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

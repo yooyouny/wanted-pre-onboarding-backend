@@ -4,6 +4,7 @@ import com.example.demo.controller.dto.request.MemberLoginRequest;
 import com.example.demo.controller.dto.request.MemberRegisterRequest;
 import com.example.demo.controller.dto.response.MemberLoginResponse;
 import com.example.demo.controller.dto.response.MemberRegisterResponse;
+import com.example.demo.entity.CustomMemberDetails;
 import com.example.demo.entity.MemberEntity;
 import com.example.demo.exception.ApplicationException;
 import com.example.demo.repository.MemberRepository;
@@ -76,17 +77,13 @@ public class MemberService {
                 .build();
     }
 
-    public MemberRegisterResponse loadMemberByEmail(String email) {
+    public CustomMemberDetails loadMemberByEmail(String email) {
         MemberEntity registeredMember = memberRepository.findByEmail(email).orElseThrow(() ->
                 ApplicationException.builder()
                         .status(HttpStatus.NOT_FOUND)
                         .message(String.format("Member %s not found", email))
                         .build());
 
-        return MemberRegisterResponse.builder()
-                .id(registeredMember.getId())
-                .email(registeredMember.getEmail())
-                .password(registeredMember.getPassword())
-                .build();
+        return CustomMemberDetails.fromEntity(registeredMember);
     }
 }
