@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,13 +25,15 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private final String secretKey;
     private final MemberService memberService;
 
+    private final static List<String> PERMIT_ALL_URLS = List.of("/api/v1/members/register", "/api/v1/members/login");
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         try {
             final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-            if (request.getRequestURI().endsWith("/register")){
+            if (PERMIT_ALL_URLS.contains(request.getRequestURI())){
                 filterChain.doFilter(request, response);
                 return;
             }

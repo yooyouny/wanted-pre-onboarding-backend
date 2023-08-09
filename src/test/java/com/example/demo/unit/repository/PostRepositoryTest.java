@@ -1,6 +1,8 @@
 package com.example.demo.unit.repository;
 
 import com.example.demo.controller.dto.request.PostCreateRequest;
+import com.example.demo.entity.CustomMemberDetails;
+import com.example.demo.entity.MemberEntity;
 import com.example.demo.entity.PostEntity;
 import com.example.demo.repository.PostRepository;
 import org.junit.jupiter.api.Assertions;
@@ -9,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import java.time.LocalDateTime;
 
 @DataJpaTest// @Trsactional 포함으로 자동 롤백
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)// 내장 datasource를 사용하지 않음
@@ -25,8 +29,13 @@ public class PostRepositoryTest {
                 .body("contents")
                 .build();
 
+        MemberEntity member = MemberEntity.builder()
+                .email("email@")
+                .password("password")
+                .build();
+
         //when
-        PostEntity savedPost = postRepository.save(PostEntity.of(request));
+        PostEntity savedPost = postRepository.save(PostEntity.of(request, member));
 
         //then
         Assertions.assertEquals(savedPost.getId(), 1);

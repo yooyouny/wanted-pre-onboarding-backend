@@ -27,7 +27,7 @@ public class MemberEntity extends BaseEntity {
 
     private String password;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member")
     private List<PostEntity> postList  = new ArrayList<PostEntity>();
 
     @Builder
@@ -40,13 +40,6 @@ public class MemberEntity extends BaseEntity {
         return MemberEntity.builder()
                 .email(request.getEmail())
                 .password(request.getPassword())
-                .build();
-    }
-
-    public static MemberEntity fromDetails(CustomMemberDetails memberDetails){
-        return MemberEntity.builder()
-                .email(memberDetails.getEmail())
-                .password(memberDetails.getPassword())
                 .build();
     }
 

@@ -21,7 +21,7 @@ public class PostRestController {
     @PostMapping
     public ApiResponse<PostCreateResponse> create(@Valid @RequestBody PostCreateRequest request,
                                                   @AuthenticationPrincipal CustomMemberDetails member){
-       return ApiResponse.ok(postService.create(request, member));
+       return ApiResponse.ok(postService.create(request, member.getUsername()));
     }
 
     @GetMapping("/{postId}")

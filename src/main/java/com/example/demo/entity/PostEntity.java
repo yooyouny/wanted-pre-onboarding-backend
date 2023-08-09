@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Table(name = "post")
@@ -27,17 +29,23 @@ public class PostEntity extends BaseEntity{
     @JoinColumn(name = "member_id")
     private MemberEntity member;
 
-    //TODO :: 생성자에 Member 추가
+    private LocalDateTime deltedAt;
+
+    private boolean isDeleted;
+
     @Builder
-    private PostEntity(String title, String body) {
+    private PostEntity(String title, String body, MemberEntity member) {
         this.title = title;
         this.body = body;
+        this.member = member;
+        this.isDeleted = false;
     }
 
-    public static PostEntity of(PostCreateRequest request){
+    public static PostEntity of(PostCreateRequest request, MemberEntity member){
         return PostEntity.builder()
                 .title(request.getTitle())
                 .body(request.getBody())
+                .member(member)
                 .build();
     }
 

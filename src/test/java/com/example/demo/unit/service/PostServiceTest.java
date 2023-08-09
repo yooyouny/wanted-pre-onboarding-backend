@@ -3,6 +3,8 @@ package com.example.demo.unit.service;
 import com.example.demo.controller.dto.request.PostCreateRequest;
 import com.example.demo.controller.dto.response.PostCreateResponse;
 import com.example.demo.controller.dto.response.PostReadResponse;
+import com.example.demo.entity.CustomMemberDetails;
+import com.example.demo.entity.MemberEntity;
 import com.example.demo.entity.PostEntity;
 import com.example.demo.exception.ApplicationException;
 import com.example.demo.repository.PostRepository;
@@ -16,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,12 +43,18 @@ class PostServiceTest {
                 .title("test")
                 .body("contents")
                 .build();
-        PostEntity savedPost = PostEntity.of(requestPost);
+
+        MemberEntity member = MemberEntity.builder()
+                .email("email@")
+                .password("password")
+                .build();
+
+        PostEntity savedPost = PostEntity.of(requestPost, member);
         savedPost.setIdForTest(1L);
         given(postRepository.save(any())).willReturn(savedPost);
 
         //when
-        PostCreateResponse response = postService.create(requestPost);
+        PostCreateResponse response = postService.create(requestPost, member.getEmail());
 
         //then
         Assertions.assertEquals(response.getId(), 1L);
