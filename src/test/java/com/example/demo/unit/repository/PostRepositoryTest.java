@@ -1,8 +1,8 @@
-package com.example.demo.repository;
+package com.example.demo.unit.repository;
 
 import com.example.demo.controller.dto.request.PostCreateRequest;
 import com.example.demo.entity.PostEntity;
-import com.example.demo.post.PostRepository;
+import com.example.demo.repository.PostRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,6 @@ public class PostRepositoryTest {
     private PostRepository postRepository;
 
     @Test
-    @DisplayName("새 포스트를 저장한다")
     void saveNewPost(){
         //given
         PostCreateRequest request = PostCreateRequest.builder()
@@ -35,7 +34,6 @@ public class PostRepositoryTest {
     }
 
     @Test
-    @DisplayName("포스트의 아이디로 저장된 포스트를 찾는다")
     void findPostById(){
         //given
         PostEntity requestPost = PostEntity.builder()

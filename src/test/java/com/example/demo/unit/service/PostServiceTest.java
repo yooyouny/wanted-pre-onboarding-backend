@@ -1,11 +1,12 @@
-package com.example.demo.service;
+package com.example.demo.unit.service;
 
 import com.example.demo.controller.dto.request.PostCreateRequest;
 import com.example.demo.controller.dto.response.PostCreateResponse;
 import com.example.demo.controller.dto.response.PostReadResponse;
 import com.example.demo.entity.PostEntity;
 import com.example.demo.exception.ApplicationException;
-import com.example.demo.post.PostRepository;
+import com.example.demo.repository.PostRepository;
+import com.example.demo.service.PostService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,6 @@ class PostServiceTest {
     @Test
     @DisplayName("요청한 내용으로 새로운 포스트를 저장하여 응답객체로 반환한다")
     void savedPostTest(){
-        //given
         PostEntity post = PostEntity.builder()
                 .title("test")
                 .body("contents")
@@ -73,7 +73,7 @@ class PostServiceTest {
         Assertions.assertEquals(response.getId(), findId);
     }
     @Test
-    @DisplayName("찾으려고 하는 포스트의 아이디가 존재하지 않아 not found 예외가 발생한다")
+    @DisplayName("찾으려고 하는 포스트의 아이디가 존재하지 않아 예외가 발생한다")
     void findPostByNotFoundedId(){
         //given
         PostEntity post1 = PostEntity.builder()
