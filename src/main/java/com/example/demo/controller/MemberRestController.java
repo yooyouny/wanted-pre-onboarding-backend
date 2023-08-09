@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.controller.dto.ApiResponse;
+import com.example.demo.controller.dto.request.MemberLoginRequest;
 import com.example.demo.controller.dto.request.MemberRegisterRequest;
+import com.example.demo.controller.dto.response.MemberLoginResponse;
 import com.example.demo.controller.dto.response.MemberRegisterResponse;
 import com.example.demo.service.MemberService;
 import jakarta.validation.Valid;
@@ -21,6 +23,11 @@ public class MemberRestController {
     @PostMapping("/register")
     public ApiResponse<MemberRegisterResponse> register(@Valid @RequestBody MemberRegisterRequest request){
        return ApiResponse.ok(memberService.register(request));
+    }
+
+    @PostMapping("/login")
+    public ApiResponse<MemberLoginResponse> login(@Valid @RequestBody MemberLoginRequest request){
+        return ApiResponse.ok(memberService.login(request));
     }
 
 }

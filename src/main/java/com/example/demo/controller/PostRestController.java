@@ -16,7 +16,6 @@ public class PostRestController {
 
     private final PostService postService;
 
-
     @PostMapping
     public ApiResponse<PostCreateResponse> create(@Valid @RequestBody PostCreateRequest request){
         // TODO :: 파라미터에 memberDto 추가

@@ -22,6 +22,10 @@ public class ApiResponse<T> {
         return new ApiResponse<>(status, message, data);
     }
 
+    public static <T> ApiResponse<T> of(HttpStatus status, String message){
+        return new ApiResponse<>(status, message, null);
+    }
+
     public static <T> ApiResponse<T> ok(T data){
         return new ApiResponse<>(HttpStatus.OK, "SUCCESS", data);
     }

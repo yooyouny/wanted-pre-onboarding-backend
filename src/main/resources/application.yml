@@ -2,7 +2,7 @@ spring:
   profiles:
     active: local # default profile
     group:
-      dev:
+      local:
         - common
       prod:
         - common
@@ -11,6 +11,10 @@ spring:
   config:
     activate:
       on-profile: common
+
+jwt:
+  secret-key: 2023-wanted-pre-onboarding-backend.secret_key
+  token.expired-time-ms: 2592000000
 
 ---
 
