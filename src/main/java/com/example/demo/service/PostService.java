@@ -1,12 +1,11 @@
 package com.example.demo.service;
 
-import com.example.demo.controller.dto.ApiResponse;
 import com.example.demo.controller.dto.request.PostCreateRequest;
 import com.example.demo.controller.dto.response.PostCreateResponse;
 import com.example.demo.controller.dto.response.PostReadResponse;
 import com.example.demo.entity.PostEntity;
 import com.example.demo.exception.ApplicationException;
-import com.example.demo.post.PostRepository;
+import com.example.demo.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

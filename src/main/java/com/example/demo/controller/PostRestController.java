@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.controller.dto.ApiResponse;
-import com.example.demo.controller.dto.MemberDto;
 import com.example.demo.controller.dto.request.PostCreateRequest;
 import com.example.demo.controller.dto.response.PostCreateResponse;
 import com.example.demo.controller.dto.response.PostReadResponse;

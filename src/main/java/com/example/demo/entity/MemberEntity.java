@@ -1,8 +1,8 @@
 package com.example.demo.entity;
 
-import com.example.demo.controller.dto.MemberDto;
+import com.example.demo.controller.dto.request.MemberRegisterRequest;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -22,11 +22,8 @@ public class MemberEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "이메일은 필수 입니다")
     private String email;
 
-    @NotBlank(message = "비밀번호는 필수 입니다")
-    @Size(min = 8, message = "비밀번호는 최소 8자 이상이어야 합니다")
     private String password;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
@@ -38,10 +35,10 @@ public class MemberEntity extends BaseEntity {
         this.password = password;
     }
 
-    public static MemberEntity fromDto(MemberDto memberDto){
+    public static MemberEntity fromDto(MemberRegisterRequest request){
         return MemberEntity.builder()
-                .email(memberDto.getEmail())
-                .password(memberDto.getPassword())
+                .email(request.getEmail())
+                .password(request.getPassword())
                 .build();
     }
 
