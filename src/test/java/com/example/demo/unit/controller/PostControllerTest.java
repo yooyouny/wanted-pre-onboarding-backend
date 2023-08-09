@@ -31,12 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 public class PostControllerTest {
-    @Mock
-    private PostService postService;
-
     @InjectMocks
     private PostRestController postRestController;
-
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
 

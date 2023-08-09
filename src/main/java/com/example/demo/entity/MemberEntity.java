@@ -35,11 +35,15 @@ public class MemberEntity extends BaseEntity {
         this.password = password;
     }
 
-    public static MemberEntity fromDto(MemberRegisterRequest request){
+    public static MemberEntity of(MemberRegisterRequest request){
         return MemberEntity.builder()
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .build();
+    }
+
+    public void setIdForTest(Long id){
+        this.id = id;
     }
 
 }
