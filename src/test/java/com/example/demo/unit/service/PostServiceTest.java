@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,19 +35,17 @@ class PostServiceTest {
     @Test
     @DisplayName("요청한 내용으로 새로운 포스트를 저장하여 응답객체로 반환한다")
     void savedPostTest(){
-        PostEntity post = PostEntity.builder()
+        //given
+        PostCreateRequest requestPost = PostCreateRequest.builder()
                 .title("test")
                 .body("contents")
                 .build();
-        post.setIdForTest(1L);
-        PostCreateRequest request = PostCreateRequest.builder()
-                .title("test")
-                .body("contents")
-                .build();
-        when(postRepository.save(any(PostEntity.class))).thenReturn(post);
+        PostEntity savedPost = PostEntity.of(requestPost);
+        savedPost.setIdForTest(1L);
+        given(postRepository.save(any())).willReturn(savedPost);
 
         //when
-        PostCreateResponse response = postService.create(request);
+        PostCreateResponse response = postService.create(requestPost);
 
         //then
         Assertions.assertEquals(response.getId(), 1L);
@@ -64,7 +63,7 @@ class PostServiceTest {
                 .body("contents")
                 .build();
         post.setIdForTest(findId);
-        when(postRepository.findById(any())).thenReturn(Optional.of(post));
+        given(postRepository.findById(any())).willReturn(Optional.of(post));
 
         //when
         PostReadResponse response = postService.getPost(findId);
@@ -86,7 +85,6 @@ class PostServiceTest {
                 .build();
         List<PostEntity> requestList = List.of(post1, post2);
         postRepository.saveAll(requestList);
-
         Long requestId = 3L;
 
         //when
