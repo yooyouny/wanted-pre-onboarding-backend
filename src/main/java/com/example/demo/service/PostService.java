@@ -11,6 +11,7 @@ import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +58,16 @@ public class PostService {
                 .registedAt(savedPost.getCreatedDateTIme())
                 .modifiedAt(savedPost.getModifiedDateTime())
                 .build();
+    }
+    public Page<PostReadResponse> getAllPost(int pageNo, int size){
+        Pageable pageable = PageRequest.of(pageNo, size, Sort.by("id").descending());
+        Page<PostEntity> postEntities = postRepository.findAll(pageable);
+
+        List<PostReadResponse> postResponses = postEntities.stream()
+                .map(PostReadResponse::fromEntity)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(postResponses, pageable, postEntities.getTotalElements());
     }
     @Transactional
     public PostReadResponse modify(Long postId, PostModifyRequest request, String email){

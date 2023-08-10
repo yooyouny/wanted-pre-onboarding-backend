@@ -31,6 +31,11 @@ public class PostRestController {
     public ApiResponse<PostReadResponse> getPost(@PathVariable Long postId){
         return ApiResponse.ok(postService.getPost(postId));
     }
+    @GetMapping
+    public ApiResponse<Page<PostReadResponse>> getAllPost(@RequestParam(defaultValue = "0") int pageNo,
+                                                          @RequestParam(defaultValue = "5") int size){
+        return ApiResponse.ok(postService.getAllPost(pageNo, size));
+    }
     @PutMapping("/{postId}")
     public ApiResponse<PostReadResponse> modify(@PathVariable Long postId,
                                                 @Valid @RequestBody PostModifyRequest request,
