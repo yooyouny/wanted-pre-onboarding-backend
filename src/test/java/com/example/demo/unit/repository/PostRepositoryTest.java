@@ -1,18 +1,22 @@
 package com.example.demo.unit.repository;
 
 import com.example.demo.controller.dto.request.PostCreateRequest;
-import com.example.demo.entity.CustomMemberDetails;
 import com.example.demo.entity.MemberEntity;
 import com.example.demo.entity.PostEntity;
 import com.example.demo.repository.PostRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
-import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
 @DataJpaTest// @Trsactional 포함으로 자동 롤백
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)// 내장 datasource를 사용하지 않음
@@ -40,19 +44,48 @@ public class PostRepositoryTest {
         //then
         Assertions.assertEquals(savedPost.getId(), 1);
         Assertions.assertEquals(savedPost.getTitle(), "test1");
+        Assertions.assertEquals(savedPost.getMember().getEmail(), "email@");
     }
 
     @Test
     void findPostById(){
         //given
-        PostEntity requestPost = PostEntity.builder()
-                .title("test1")
-                .body("contents")
-                .build();
+        PostEntity requestPost = createPost("test01");
         PostEntity savedPost = postRepository.save(requestPost);
 
-        //when
+        //when then
         Assertions.assertDoesNotThrow(() -> postRepository.findById(savedPost.getId()));
+        Assertions.assertEquals(savedPost.getId(), 1L);
+        Assertions.assertEquals(savedPost.getTitle(), "test01");
+    }
+
+    @Test
+    void findAll(){
+        //given
+        List<PostEntity> savedPost = List.of(createPost("test1")
+                                    ,createPost("test2")
+                                    ,createPost("test3")
+                                    ,createPost("test4"));
+        postRepository.saveAll(savedPost);
+        Pageable pageable = PageRequest.of(0, 3);
+
+        //when
+        Page<PostEntity> response= postRepository.findAll(pageable);
+
+        //then
+        assertThat(response).hasSize(3)
+                .extracting("id", "title", "body")
+                .containsExactlyInAnyOrder(
+                        tuple(1L, "test1", "contents"),
+                        tuple(2L, "test2", "contents"),
+                        tuple(3L, "test3", "contents")
+                );
+    }
+    private PostEntity createPost(String title){
+        return PostEntity.builder()
+                .title(title)
+                .body("contents")
+                .build();
     }
 
 }
