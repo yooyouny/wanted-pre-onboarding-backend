@@ -11,7 +11,7 @@ import java.util.Collection;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomMemberDetails implements UserDetails {
+public class MemberDetails implements UserDetails {
 
     private Long id;
     private String email;
@@ -19,8 +19,8 @@ public class CustomMemberDetails implements UserDetails {
     private LocalDateTime registerAt;
     private LocalDateTime modifiedAt;
 
-    public static CustomMemberDetails fromEntity(MemberEntity member){
-        return new CustomMemberDetails(
+    public static MemberDetails fromEntity(MemberEntity member){
+        return new MemberDetails(
                 member.getId(),
                 member.getEmail(),
                 member.getPassword(),

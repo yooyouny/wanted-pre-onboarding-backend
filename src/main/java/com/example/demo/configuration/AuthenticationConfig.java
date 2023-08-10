@@ -2,6 +2,7 @@ package com.example.demo.configuration;
 
 import com.example.demo.configuration.filter.JwtTokenFilter;
 import com.example.demo.exception.CustomAuthenticationEntryPoint;
+import com.example.demo.service.MemberDetailsService;
 import com.example.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class AuthenticationConfig{
 
-	private final MemberService memberService;
+	private final MemberDetailsService detailsService;
 
 	@Value("${jwt.secret-key}")
 	private String secretKey;
@@ -44,7 +45,7 @@ public class AuthenticationConfig{
 				.exceptionHandling((exceptionHandling) ->
 								exceptionHandling.authenticationEntryPoint(new CustomAuthenticationEntryPoint())
 				)
-				.addFilterBefore(new JwtTokenFilter(secretKey, memberService), UsernamePasswordAuthenticationFilter.class);
+				.addFilterBefore(new JwtTokenFilter(secretKey, detailsService), UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
 	}

@@ -5,15 +5,13 @@ import com.example.demo.controller.dto.request.PostCreateRequest;
 import com.example.demo.controller.dto.request.PostModifyRequest;
 import com.example.demo.controller.dto.response.PostCreateResponse;
 import com.example.demo.controller.dto.response.PostReadResponse;
-import com.example.demo.entity.CustomMemberDetails;
+import com.example.demo.entity.MemberDetails;
 import com.example.demo.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/posts")
@@ -24,7 +22,7 @@ public class PostRestController {
 
     @PostMapping
     public ApiResponse<PostCreateResponse> create(@Valid @RequestBody PostCreateRequest request,
-                                                  @AuthenticationPrincipal CustomMemberDetails member){
+                                                  @AuthenticationPrincipal MemberDetails member){
        return ApiResponse.ok(postService.create(request, member.getUsername()));
     }
     @GetMapping("/{postId}")
@@ -39,12 +37,12 @@ public class PostRestController {
     @PutMapping("/{postId}")
     public ApiResponse<PostReadResponse> modify(@PathVariable Long postId,
                                                 @Valid @RequestBody PostModifyRequest request,
-                                                @AuthenticationPrincipal CustomMemberDetails member){
+                                                @AuthenticationPrincipal MemberDetails member){
         return ApiResponse.ok(postService.modify(postId, request, member.getUsername()));
     }
     @DeleteMapping("{postId}")
     public ApiResponse<Void> delete(@PathVariable Long postId,
-                                    @AuthenticationPrincipal CustomMemberDetails member){
+                                    @AuthenticationPrincipal MemberDetails member){
         postService.delete(postId, member.getUsername());
         return ApiResponse.ok();
     }

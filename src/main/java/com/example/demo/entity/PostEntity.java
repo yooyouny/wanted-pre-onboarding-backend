@@ -30,7 +30,7 @@ public class PostEntity extends BaseEntity{
     @JoinColumn(name = "member_id")
     private MemberEntity member;
 
-    private LocalDateTime deltedAt;
+    private LocalDateTime deletedAt;
 
     private boolean isDeleted;
 
@@ -54,7 +54,7 @@ public class PostEntity extends BaseEntity{
         this.body = request.getBody();
     }
     public void deletePost(){
-        this.deltedAt = LocalDateTime.now();
+        this.deletedAt = LocalDateTime.now();
         this.isDeleted = true;
     }
     public void setIdForTest(Long id){

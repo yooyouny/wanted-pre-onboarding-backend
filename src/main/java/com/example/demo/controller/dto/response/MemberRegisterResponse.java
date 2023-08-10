@@ -15,21 +15,21 @@ public class MemberRegisterResponse {
     private Long id;
     private String email;
     private String password;
-    private LocalDateTime registedAt;
+    private LocalDateTime registeredAt;
 
     @Builder
-    private MemberRegisterResponse(Long id, String email, String password, LocalDateTime registedAt){
+    private MemberRegisterResponse(Long id, String email, String password, LocalDateTime registeredAt){
         this.id = id;
         this.email = email;
         this.password = password;
-        this.registedAt = registedAt;
+        this.registeredAt = registeredAt;
     }
     public static MemberRegisterResponse fromEntity(MemberEntity entity){
         return MemberRegisterResponse.builder()
                 .id(entity.getId())
                 .email(entity.getEmail())
                 .password(entity.getPassword())
-                .registedAt(entity.getCreatedDateTIme())
+                .registeredAt(entity.getCreatedDateTIme())
                 .build();
     }
 }

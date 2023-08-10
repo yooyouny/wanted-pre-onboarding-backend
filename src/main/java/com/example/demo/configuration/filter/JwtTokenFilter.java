@@ -1,6 +1,7 @@
 package com.example.demo.configuration.filter;
 
-import com.example.demo.entity.CustomMemberDetails;
+import com.example.demo.entity.MemberDetails;
+import com.example.demo.service.MemberDetailsService;
 import com.example.demo.service.MemberService;
 import com.example.demo.utill.JwtTokenUtils;
 import jakarta.servlet.FilterChain;
@@ -23,7 +24,7 @@ import java.util.List;
 public class JwtTokenFilter extends OncePerRequestFilter {
 
     private final String secretKey;
-    private final MemberService memberService;
+    private final MemberDetailsService detailsService;
 
     private final static List<String> PERMIT_ALL_URLS = List.of("/api/v1/members/register", "/api/v1/members/login");
 
@@ -53,7 +54,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             }
 
             String email = JwtTokenUtils.getEmailFromToken(token, secretKey);
-            CustomMemberDetails member = memberService.loadMemberByEmail(email);
+            MemberDetails member = detailsService.loadMemberByEmail(email);
 
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                     member, null, null

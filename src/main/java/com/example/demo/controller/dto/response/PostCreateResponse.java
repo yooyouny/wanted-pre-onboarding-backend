@@ -15,15 +15,15 @@ public class PostCreateResponse {
     private String title;
     private String body;
     private String email;
-    private LocalDateTime registerAt;
+    private LocalDateTime registeredAt;
 
     @Builder
-    private PostCreateResponse(Long id, String title, String body, String email, LocalDateTime registerAt) {
+    private PostCreateResponse(Long id, String title, String body, String email, LocalDateTime registeredAt) {
         this.id = id;
         this.title = title;
         this.body = body;
         this.email = email;
-        this.registerAt = registerAt;
+        this.registeredAt = registeredAt;
     }
 
     public static PostCreateResponse fromEntity(PostEntity entity){
@@ -32,7 +32,7 @@ public class PostCreateResponse {
                 .title(entity.getTitle())
                 .body(entity.getBody())
                 .email(entity.getMember().getEmail())
-                .registerAt(entity.getCreatedDateTIme())
+                .registeredAt(entity.getCreatedDateTIme())
                 .build();
     }
 
