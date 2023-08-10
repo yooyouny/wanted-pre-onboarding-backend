@@ -27,16 +27,20 @@ public class PostRestController {
                                                   @AuthenticationPrincipal CustomMemberDetails member){
        return ApiResponse.ok(postService.create(request, member.getUsername()));
     }
-
     @GetMapping("/{postId}")
     public ApiResponse<PostReadResponse> getPost(@PathVariable Long postId){
         return ApiResponse.ok(postService.getPost(postId));
     }
-
     @PutMapping("/{postId}")
     public ApiResponse<PostReadResponse> modify(@PathVariable Long postId,
                                                 @Valid @RequestBody PostModifyRequest request,
                                                 @AuthenticationPrincipal CustomMemberDetails member){
         return ApiResponse.ok(postService.modify(postId, request, member.getUsername()));
+    }
+    @DeleteMapping("{postId}")
+    public ApiResponse<Void> delete(@PathVariable Long postId,
+                                    @AuthenticationPrincipal CustomMemberDetails member){
+        postService.delete(postId, member.getUsername());
+        return ApiResponse.ok();
     }
 }

@@ -77,6 +77,15 @@ public class PostService {
                 .modifiedAt(modifiedPost.getModifiedDateTime())
                 .build();
     }
+    @Transactional
+    public void delete(Long postId, String email){
+        PostEntity post = getExistingPostById(postId);
+        MemberEntity writer = getMemberByEmail(email);
+
+        checkOwnership(post, writer);
+
+        post.deletePost();
+    }
     private PostEntity getExistingPostById(Long postId){
         return postRepository.findById(postId).orElseThrow( () ->
                 ApplicationException.builder()
