@@ -15,16 +15,16 @@ public class PostReadResponse {
     private String title;
     private String body;
     private String email;
-    private LocalDateTime registedAt;
+    private LocalDateTime registeredAt;
     private LocalDateTime modifiedAt;
 
     @Builder
-    private PostReadResponse(Long id, String title, String body, String email, LocalDateTime registedAt, LocalDateTime modifiedAt){
+    private PostReadResponse(Long id, String title, String body, String email, LocalDateTime registeredAt, LocalDateTime modifiedAt){
         this.id = id;
         this.title = title;
         this.body = body;
         this.email = email;
-        this.registedAt = registedAt;
+        this.registeredAt = registeredAt;
         this.modifiedAt = modifiedAt;
     }
 
@@ -33,7 +33,7 @@ public class PostReadResponse {
                 .id(entity.getId())
                 .title(entity.getTitle())
                 .email(entity.getMember().getEmail())
-                .registedAt(entity.getCreatedDateTIme())
+                .registeredAt(entity.getCreatedDateTIme())
                 .modifiedAt(entity.getModifiedDateTime())
                 .build();
     }

@@ -47,12 +47,7 @@ public class MemberService {
 
        MemberEntity registeredMember = memberRepository.save(memberEntity);
 
-       return MemberRegisterResponse.builder()
-               .id(registeredMember.getId())
-               .email(registeredMember.getEmail())
-               .password(registeredMember.getPassword())
-               .registedAt(registeredMember.getCreatedDateTIme())
-               .build();
+       return MemberRegisterResponse.fromEntity(registeredMember);
     }
     public MemberLoginResponse login(MemberLoginRequest request){
 

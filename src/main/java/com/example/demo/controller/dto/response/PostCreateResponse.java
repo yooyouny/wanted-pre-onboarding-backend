@@ -1,5 +1,6 @@
 package com.example.demo.controller.dto.response;
 
+import com.example.demo.entity.PostEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,16 @@ public class PostCreateResponse {
         this.body = body;
         this.email = email;
         this.registerAt = registerAt;
+    }
+
+    public static PostCreateResponse fromEntity(PostEntity entity){
+        return PostCreateResponse.builder()
+                .id(entity.getId())
+                .title(entity.getTitle())
+                .body(entity.getBody())
+                .email(entity.getMember().getEmail())
+                .registerAt(entity.getCreatedDateTIme())
+                .build();
     }
 
 }

@@ -39,25 +39,12 @@ public class PostService {
                 .build();
 
         PostEntity savedPost = postRepository.save(requestPost);
-
-        return PostCreateResponse.builder()
-                .id(savedPost.getId())
-                .title(savedPost.getTitle())
-                .body(savedPost.getBody())
-                .email(savedPost.getMember().getEmail())
-                .registerAt(savedPost.getCreatedDateTIme())
-                .build();
+        return PostCreateResponse.fromEntity(savedPost);
     }
     public PostReadResponse getPost(Long postId){
         PostEntity savedPost = getExistingPostById(postId);
 
-        return PostReadResponse.builder()
-                .id(savedPost.getId())
-                .title(savedPost.getTitle())
-                .body(savedPost.getBody())
-                .registedAt(savedPost.getCreatedDateTIme())
-                .modifiedAt(savedPost.getModifiedDateTime())
-                .build();
+        return PostReadResponse.fromEntity(savedPost);
     }
     public Page<PostReadResponse> getAllPost(int pageNo, int size){
         Pageable pageable = PageRequest.of(pageNo, size, Sort.by("id").descending());
@@ -79,14 +66,7 @@ public class PostService {
         post.modifyPost(request);
         PostEntity modifiedPost = postRepository.saveAndFlush(post);
 
-        return PostReadResponse.builder()
-                .id(modifiedPost.getId())
-                .title(modifiedPost.getTitle())
-                .body(modifiedPost.getBody())
-                .email(modifiedPost.getMember().getEmail())
-                .registedAt(modifiedPost.getCreatedDateTIme())
-                .modifiedAt(modifiedPost.getModifiedDateTime())
-                .build();
+        return PostReadResponse.fromEntity(modifiedPost);
     }
     @Transactional
     public void delete(Long postId, String email){
