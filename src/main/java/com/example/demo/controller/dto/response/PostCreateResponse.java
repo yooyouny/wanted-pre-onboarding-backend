@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor
 public class PostCreateResponse {
@@ -12,13 +14,15 @@ public class PostCreateResponse {
     private String title;
     private String body;
     private String email;
+    private LocalDateTime registerAt;
 
     @Builder
-    private PostCreateResponse(Long id, String title, String body, String email) {
+    private PostCreateResponse(Long id, String title, String body, String email, LocalDateTime registerAt) {
         this.id = id;
         this.title = title;
         this.body = body;
         this.email = email;
+        this.registerAt = registerAt;
     }
 
 }

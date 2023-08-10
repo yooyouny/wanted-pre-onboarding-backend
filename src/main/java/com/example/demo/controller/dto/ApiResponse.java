@@ -29,4 +29,7 @@ public class ApiResponse<T> {
     public static <T> ApiResponse<T> ok(T data){
         return new ApiResponse<>(HttpStatus.OK, "SUCCESS", data);
     }
+    public static <T> ApiResponse<T> ok(){
+        return new ApiResponse<>(HttpStatus.OK, "SUCCESS", null);
+    }
 }

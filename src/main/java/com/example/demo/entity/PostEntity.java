@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.example.demo.controller.dto.request.PostCreateRequest;
+import com.example.demo.controller.dto.request.PostModifyRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
@@ -48,7 +49,14 @@ public class PostEntity extends BaseEntity{
                 .member(member)
                 .build();
     }
-
+    public void modifyPost(PostModifyRequest request){
+        this.title = request.getTitle();
+        this.body = request.getBody();
+    }
+    public void deletePost(){
+        this.deltedAt = LocalDateTime.now();
+        this.isDeleted = true;
+    }
     public void setIdForTest(Long id){
         this.id = id;
     }
