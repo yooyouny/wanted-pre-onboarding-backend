@@ -4,7 +4,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -23,8 +22,8 @@ public class JwtTokenUtils {
                 .compact();
     }
 
-    private static Key getKey(String key){
-        byte[] keyByte = key.getBytes(StandardCharsets.UTF_8);
+    private static Key getKey(String secretKey){
+        byte[] keyByte = secretKey.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyByte);
     }
     public static boolean isExpired(String token, String secretKey){

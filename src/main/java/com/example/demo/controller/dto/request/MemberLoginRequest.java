@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,4 +18,10 @@ public class MemberLoginRequest {
 
     @NotBlank(message = "비밀번호는 필수 입니다")
     private String password;
+
+    @Builder
+    private MemberLoginRequest(String email, String password){
+        this.email = email;
+        this.password = password;
+    }
 }

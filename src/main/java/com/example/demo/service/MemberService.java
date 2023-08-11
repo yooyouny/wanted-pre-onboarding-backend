@@ -53,7 +53,7 @@ public class MemberService {
         MemberEntity registeredMember = memberRepository.findByEmail(request.getEmail()).orElseThrow(() ->
                 ApplicationException.builder()
                         .status(HttpStatus.NOT_FOUND)
-                        .message(String.format("Email %s not founded", request.getEmail()))
+                        .message("Email not founded")
                         .build()
         );
 

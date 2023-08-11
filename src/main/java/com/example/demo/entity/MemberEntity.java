@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.controller.dto.request.MemberLoginRequest;
 import com.example.demo.controller.dto.request.MemberRegisterRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -28,7 +29,7 @@ public class MemberEntity extends BaseEntity {
     private String password;
 
     @OneToMany(mappedBy = "member")
-    private List<PostEntity> postList  = new ArrayList<PostEntity>();
+    private final List<PostEntity> postList  = new ArrayList<PostEntity>();
 
     @Builder
     private MemberEntity(String email, String password) {
@@ -37,6 +38,12 @@ public class MemberEntity extends BaseEntity {
     }
 
     public static MemberEntity of(MemberRegisterRequest request){
+        return MemberEntity.builder()
+                .email(request.getEmail())
+                .password(request.getPassword())
+                .build();
+    }
+    public static MemberEntity of(MemberLoginRequest request){
         return MemberEntity.builder()
                 .email(request.getEmail())
                 .password(request.getPassword())

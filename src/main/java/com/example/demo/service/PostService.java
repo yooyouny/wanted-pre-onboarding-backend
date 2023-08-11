@@ -31,19 +31,11 @@ public class PostService {
     @Transactional
     public PostCreateResponse create(PostCreateRequest request, String email){
         MemberEntity writer = getMemberByEmail(email);
-
-        PostEntity requestPost = PostEntity.builder()
-                .title(request.getTitle())
-                .body(request.getBody())
-                .member(writer)
-                .build();
-
-        PostEntity savedPost = postRepository.save(requestPost);
-        return PostCreateResponse.fromEntity(savedPost);
+        PostEntity requestPost = PostEntity.of(request, writer);
+        return PostCreateResponse.fromEntity(postRepository.save(requestPost));
     }
     public PostReadResponse getPost(Long postId){
         PostEntity savedPost = getExistingPostById(postId);
-
         return PostReadResponse.fromEntity(savedPost);
     }
     public Page<PostReadResponse> getAllPost(int pageNo, int size){
@@ -62,11 +54,9 @@ public class PostService {
         MemberEntity writer = getMemberByEmail(email);
 
         checkOwnership(post, writer);
-
         post.modifyPost(request);
-        PostEntity modifiedPost = postRepository.saveAndFlush(post);
 
-        return PostReadResponse.fromEntity(modifiedPost);
+        return PostReadResponse.fromEntity(postRepository.saveAndFlush(post));
     }
     @Transactional
     public void delete(Long postId, String email){
@@ -74,7 +64,6 @@ public class PostService {
         MemberEntity writer = getMemberByEmail(email);
 
         checkOwnership(post, writer);
-
         post.deletePost();
     }
     private PostEntity getExistingPostById(Long postId){
@@ -95,7 +84,7 @@ public class PostService {
         if(writer.getId() != post.getMember().getId()){
             throw ApplicationException.builder()
                     .status(HttpStatus.FORBIDDEN)
-                    .message("Only the Member of the post is modify it")
+                    .message("Only the writer of the post is modify it")
                     .build();
         }
     }

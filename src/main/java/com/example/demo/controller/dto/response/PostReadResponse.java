@@ -32,6 +32,7 @@ public class PostReadResponse {
         return PostReadResponse.builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
+                .body(entity.getBody())
                 .email(entity.getMember().getEmail())
                 .registeredAt(entity.getCreatedDateTIme())
                 .modifiedAt(entity.getModifiedDateTime())
