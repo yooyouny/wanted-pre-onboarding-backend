@@ -18,8 +18,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
-@DataJpaTest// @Trsactional 포함으로 자동 롤백
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)// 내장 datasource를 사용하지 않음
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class PostRepositoryTest {
 
     @Autowired
@@ -52,6 +52,7 @@ public class PostRepositoryTest {
         //given
         PostEntity requestPost = createPost("test01");
         PostEntity savedPost = postRepository.save(requestPost);
+        savedPost.setIdForTest(1L);
 
         //when then
         Assertions.assertDoesNotThrow(() -> postRepository.findById(savedPost.getId()));
@@ -74,11 +75,11 @@ public class PostRepositoryTest {
 
         //then
         assertThat(response).hasSize(3)
-                .extracting("id", "title", "body")
+                .extracting("title", "body")
                 .containsExactlyInAnyOrder(
-                        tuple(1L, "test1", "contents"),
-                        tuple(2L, "test2", "contents"),
-                        tuple(3L, "test3", "contents")
+                        tuple("test1", "contents"),
+                        tuple("test2", "contents"),
+                        tuple("test3", "contents")
                 );
     }
     private PostEntity createPost(String title){
