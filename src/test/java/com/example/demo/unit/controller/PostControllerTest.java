@@ -2,9 +2,6 @@ package com.example.demo.unit.controller;
 
 import com.example.demo.controller.PostRestController;
 import com.example.demo.controller.dto.request.PostCreateRequest;
-import com.example.demo.controller.dto.response.PostCreateResponse;
-import com.example.demo.service.PostService;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
