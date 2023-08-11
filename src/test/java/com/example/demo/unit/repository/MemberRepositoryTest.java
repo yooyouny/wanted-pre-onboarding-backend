@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @DataJpaTest
@@ -51,10 +50,8 @@ public class MemberRepositoryTest {
         Optional<MemberEntity> foundMember = memberRepository.findByEmail(email);
 
         //then
-        Assertions.assertTrue(foundMember.isPresent());
-        MemberEntity savedMember = foundMember.get();
-        Assertions.assertEquals(email, savedMember.getEmail());
-        Assertions.assertEquals("12345678", savedMember.getPassword());
+        Assertions.assertEquals(email, foundMember.get().getEmail());
+        Assertions.assertEquals("12345678", foundMember.get().getPassword());
     }
 
 }
