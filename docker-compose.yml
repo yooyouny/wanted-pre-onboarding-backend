@@ -1,0 +1,46 @@
+version: "3.8"
+services:
+  database:
+    container_name: wanted_pre_onboarding_mysql
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_HOST=%
+    command:
+      - --character-set-server=utf8
+      - --collation-server=utf8_general_ci
+      - --default-authentication-plugin=caching_sha2_password
+    ports:
+      - "${DATASOURCE_PORT}:${DATASOURCE_DOCKER_PORT}"
+    volumes:
+      - ./db/conf.d:/etc/mysql/conf.d
+      - ./db/data:/var/lib/mysql
+      - ./db/initdb.d:/docker-entrypoint-initdb.d
+    restart: always
+    networks:
+      - test_network
+
+  application:
+      container_name: wanted-pre-onboarding-backend-app
+      image: yooyoun/wanted-pre-onboarding-backend-app
+      build:
+        context: ./
+        dockerfile: Dockerfile
+      env_file: ./.env
+      ports:
+        - "${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}"
+      environment:
+        - SPRING_DATASOURCE_URL=jdbc:mysql://wanted_pre_onboarding_mysql:${DATASOURCE_DOCKER_PORT}/${DATASOURCE_DATABASE}?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
+        - SPRING_DATASOURCE_USERNAME=${DATASOURCE_USERNAME}
+        - SPRING_DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
+        - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+      restart: always
+      depends_on:
+        - database
+      networks:
+        - test_network
+
+networks:
+  test_network:
+    driver: bridge
