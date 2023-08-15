@@ -1,6 +1,6 @@
 # wanted-pre-onboarding-backend
 
-#### [원티드 프리온보딩 백엔드 인턴십 - 선발 과제](https://github.com/yooyouny/wanted-pre-onboarding-backend)
+#### [원티드 프리온보딩 백엔드 인턴십 - 선발 과제](https://github.com/lordmyshepherd-edu/wanted-pre-onboardung-backend-selection-assignment)
 
 --- 
 
@@ -12,24 +12,21 @@
 
 ### 2️⃣ 애플리케이션의 실행 방법  
 
-- 배포 주소
-    ```
-  http://3.37.10.158:8080  
-    ```  
+- 배포 주소  
+    비용 문제로 8.21부터 서버를 내림
 
 
 - 빌드 및 실행  
 
     ```
-  $ git clone https://github.com/yooyouny/wanted-pre-onboarding-backend.git`  
+  $ git clone https://github.com/yooyouny/wanted-pre-onboarding-backend.git
   $ cd wanted-pre-onboarding-backend  
   $ ./gradlew clean build
   $ docker-compose up --build
     ```
-  💡테스트 오류 시 ./gradlew clean build -x test로 테스트 제외하고 재빌드  
-  
+  💡테스트 제외 빌드 시 ./gradlew clean build -x test로 빌드  
 
-    
+
 - 엔드포인트 호출 방법  
 
   | description | HTTP Method | End Point|
@@ -39,7 +36,7 @@
   | 포스트 등록 | POST        | /api/v1/posts |
   | 특정 포스트 조회 | GET         | /api/v1/posts/{postId} |
   | 특정 포스트 수정 | PUT         | /api/v1/posts/{postId} |
-  | 특정 포스트 삭제 | DELETE      | /api/v1/posts/{postId} |
+  | 특정 포스트 삭제 | PATCH       | /api/v1/posts/{postId} |
   | 포스트 목록 조회 | GET         | /api/v1/posts |     
   
 
@@ -59,18 +56,20 @@
 ### 📌 Skill
 
   - Java 17
-  - Spring Boot 3.1.2
+  - Spring Boot 3.1
   - Spring Data JPA
   - Spring Security
   - Gradle
   - MySQL 8.0
   - Junit5
   - Docker  
+  - AWS EC2
 
 ---   
 
 ### 4️⃣ 구현한 API의 동작을 촬영한 데모 영상
 
+https://youtu.be/5sEk1KytqeM  
 
 
 --- 
@@ -120,7 +119,7 @@
 
   ✔️️ 테스트 코드 
   - layer 별 단위테스트 수행(repository, service, controller, domain) 
-  - controller 통합테스트 수행으로 드의 신뢰성을 높임
+  - controller 통합테스트 수행으로 코드의 신뢰성을 높임
 
   ✔️️ 배포
   - docker-compose 활용으로 어플리케이션 환경을 쉽게 구성 
@@ -252,6 +251,13 @@
        ]
     }
      ```
+
+  - 401 Unauthorized
+     ```
+    {
+        Token is invalid
+    }
+     ```
 ### 4. 특정 포스트 조회
   - GET `/api/v1/posts/{postId}`
   - Headers `Authorization: Bearer {token}`
@@ -269,6 +275,7 @@
               "email": "test@naver.com",
               "registeredAt": "2023-08-15T07:04:50.374106",
               "modifiedAt": "2023-08-15T07:04:50.374106"
+              "deletedAt": null
           }
       }
         ```
@@ -305,6 +312,7 @@
           "email": "test@naver.com",
           "registeredAt": "2023-08-15T07:04:50.374106",
           "modifiedAt": "2023-08-15T07:28:21.442714841"
+          "deletedAt": null
         }
     }
       ```
@@ -317,6 +325,12 @@
           "게시글 내용은 필수입니다",
           "게시글 제목은 필수입니다"
        ]
+    }
+     ```
+  - 401 Unauthorized
+     ```
+    {
+        Token is invalid
     }
      ```
   - 403 Forbidden
@@ -348,6 +362,12 @@
         "data": null
       }
       ```
+    - 401 Unauthorized
+       ```
+      {
+          Token is invalid
+      }
+       ```
     - 403 Forbidden
       ```
       {
