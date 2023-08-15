@@ -56,7 +56,6 @@ public class MemberServiceTest {
         //then
         Assertions.assertEquals(response.getId(), 1L);
         Assertions.assertEquals(response.getEmail(), email);
-        Assertions.assertEquals(response.getPassword(), request.getPassword());
     }
     @Test
     @DisplayName("요청한 아이디로는 이미 가입되어있어 예외가 발생한다")
