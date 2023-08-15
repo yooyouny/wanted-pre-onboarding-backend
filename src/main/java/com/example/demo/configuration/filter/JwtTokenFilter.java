@@ -26,18 +26,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private final String secretKey;
     private final MemberDetailsService detailsService;
 
-    private final static List<String> PERMIT_ALL_URLS = List.of("/api/v1/members/register", "/api/v1/members/login");
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         try {
             final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-
-            if (PERMIT_ALL_URLS.contains(request.getRequestURI())){
-                filterChain.doFilter(request, response);
-                return;
-            }
 
             if (header == null || !header.startsWith("Bearer ")) {
                 log.error("Authorization Header does not start with Bearer {}", request.getRequestURI());
