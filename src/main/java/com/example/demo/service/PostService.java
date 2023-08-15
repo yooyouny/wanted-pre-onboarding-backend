@@ -84,7 +84,7 @@ public class PostService {
         if(writer.getId() != post.getMember().getId()){
             throw ApplicationException.builder()
                     .status(HttpStatus.FORBIDDEN)
-                    .message("Only the writer of the post is modify it")
+                    .message("This post is accessible only to the author of the post")
                     .build();
         }
     }
