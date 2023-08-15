@@ -17,15 +17,17 @@ public class PostReadResponse {
     private String email;
     private LocalDateTime registeredAt;
     private LocalDateTime modifiedAt;
+    private LocalDateTime deletedAt;
 
     @Builder
-    private PostReadResponse(Long id, String title, String body, String email, LocalDateTime registeredAt, LocalDateTime modifiedAt){
+    private PostReadResponse(Long id, String title, String body, String email, LocalDateTime registeredAt, LocalDateTime modifiedAt, LocalDateTime deletedAt){
         this.id = id;
         this.title = title;
         this.body = body;
         this.email = email;
         this.registeredAt = registeredAt;
         this.modifiedAt = modifiedAt;
+        this.deletedAt = deletedAt;
     }
 
     public static PostReadResponse fromEntity(PostEntity entity){
@@ -36,6 +38,7 @@ public class PostReadResponse {
                 .email(entity.getMember().getEmail())
                 .registeredAt(entity.getCreatedDateTIme())
                 .modifiedAt(entity.getModifiedDateTime())
+                .deletedAt(entity.getDeletedAt())
                 .build();
     }
 
